@@ -47,9 +47,9 @@ public class ProductService implements IProductService {
         product.setWarrantyType(payload.getWarrantyType());
         product.setDescription(payload.getDescription());
         product.setStockQuantity(payload.getStockQuantity());
-        product.setIsActive(true);
+        product.setActive(true);
 
-        // product.setManufacturerId(payload.getManufacturerId().intValue());
+        product.setManufacturerId(payload.getManufacturerId().intValue());
 
         // SAVE the product
         Product savedProduct = productRepository.save(product);
