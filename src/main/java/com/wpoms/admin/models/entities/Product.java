@@ -34,4 +34,12 @@ public class Product {
 
     @Column(name = "manufacturer_id")
     private int manufacturerId;
+
+    
+
+    @Column(name ="stock_quantity")
+    private Integer stockQuantity;
+
+    @Column(name="is_active")
+    private Boolean isActive;
 }

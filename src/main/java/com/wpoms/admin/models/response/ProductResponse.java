@@ -16,6 +16,9 @@ public class ProductResponse {
     private String warrantyType;
     private String description;
     private int manufacturerId;
+    private String manufacturerName;
+    private Integer stockQuantity;
+    private Boolean isActive;
     private String message;
 
 }

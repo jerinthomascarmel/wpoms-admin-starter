@@ -19,4 +19,6 @@ public interface IProductService {
     // Update product
     ProductResponse updateProduct(int productId, ProductPayload payload);
 
+      
+
 }

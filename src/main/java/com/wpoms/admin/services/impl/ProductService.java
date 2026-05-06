@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wpoms.admin.models.entities.ManufacturerMaster;
 import com.wpoms.admin.models.entities.Product;
 import com.wpoms.admin.models.payloads.ProductPayload;
 import com.wpoms.admin.models.response.ProductResponse;
@@ -45,7 +46,10 @@ public class ProductService implements IProductService {
         product.setPrice(payload.getPrice());
         product.setWarrantyType(payload.getWarrantyType());
         product.setDescription(payload.getDescription());
-        product.setManufacturerId(payload.getManufacturerId().intValue());
+        product.setStockQuantity(payload.getStockQuantity());
+        product.setIsActive(true);
+
+        // product.setManufacturerId(payload.getManufacturerId().intValue());
 
         // SAVE the product
         Product savedProduct = productRepository.save(product);
@@ -148,4 +152,9 @@ public class ProductService implements IProductService {
 
         return response;
     }
+
+    
+        
+
+
 }
