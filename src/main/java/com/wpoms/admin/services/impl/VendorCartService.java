@@ -213,5 +213,3 @@ public class VendorCartService implements IVendorCartService {
         return response;
     }
 }
-
-

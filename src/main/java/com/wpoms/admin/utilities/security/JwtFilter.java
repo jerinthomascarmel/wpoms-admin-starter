@@ -80,7 +80,8 @@ public class JwtFilter extends OncePerRequestFilter {
     // Public Paths
     private boolean shouldSkipFilter(String path) {
         return path.equals("/api/login") ||
-                path.equals("/api/register") ||
+                path.equals("/api/admin/register-manufacturer") ||
+                path.equals("/api/customer/register-customer") ||
                 path.startsWith("/swagger-ui") ||
                 path.startsWith("/v3/api-docs") ||
                 path.equals("/swagger-ui.html") ||

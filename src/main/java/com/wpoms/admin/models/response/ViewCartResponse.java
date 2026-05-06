@@ -1,7 +1,5 @@
 package com.wpoms.admin.models.response;
 
-
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +15,6 @@ public class ViewCartResponse {
     private int cartId;
     private List<CartItemDetail> items;
     private double totalAmount;
-
 
     @Data
     @AllArgsConstructor

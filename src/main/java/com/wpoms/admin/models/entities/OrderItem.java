@@ -5,37 +5,30 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-import java.time.LocalDateTime;
-
-
 @Entity
-@Table(name = "cart_item")
+@Table(name = "order_items")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartItem {
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cartitem_id")
-    private int cartItemId;
+    @Column(name = "orderitem_id")
+    private int orderItemId;
 
-
-    @Column(name = "cart_id")
-    private int cartId;
-
+    @Column(name = "order_id")
+    private int orderId;
 
     @Column(name = "product_id")
     private int productId;
 
-
     @Column(name = "quantity")
     private int quantity;
 
+    @Column(name = "price")
+    private double price;
 
-    @Column(name = "added_at")
-    private LocalDateTime addedAt;
+    @Column(name = "subtotal")
+    private double subtotal;
 }
-
-

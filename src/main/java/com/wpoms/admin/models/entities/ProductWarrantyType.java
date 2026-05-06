@@ -5,27 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-import java.time.LocalDateTime;
-
-
 @Entity
-@Table(name = "cart")
+@Table(name = "product_warranty_type")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cart {
+public class ProductWarrantyType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart_id")
-    private int cartId;
+    @Column(name = "warranty_type_id")
+    private int warrantyTypeId;
 
-
-    @Column(name = "vendor_id", unique = true)
-    private int vendorId;
-
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @Column(name = "warranty_type", unique = true, nullable = false)
+    private String warrantyType;
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RemoveCartItemResponse {
-    private String message;
+public class ProductWarrantyTypeResponse {
+    private int warrantyTypeId;
+    private String warrantyType;
 }

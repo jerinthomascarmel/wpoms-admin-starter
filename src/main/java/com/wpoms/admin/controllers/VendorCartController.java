@@ -1,6 +1,5 @@
 package com.wpoms.admin.controllers;
 
-
 import com.wpoms.admin.models.payloads.AddToCartPayload;
 import com.wpoms.admin.models.response.AddToCartResponse;
 import com.wpoms.admin.models.response.RemoveCartItemResponse;
@@ -14,7 +13,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 @RestController
 @RequestMapping("/api/vendor/cart")
@@ -35,14 +33,12 @@ public class VendorCartController {
         return ResponseEntity.ok(response);
     }
 
-
     // GET /api/vendor/cart
     @GetMapping
     public ResponseEntity<ViewCartResponse> viewCart(@RequestParam int vendorId) {
         ViewCartResponse response = vendorCartService.viewCart(vendorId);
         return ResponseEntity.ok(response);
     }
-
 
     // DELETE /api/vendor/cart/remove/{cartItemId}
     @DeleteMapping("/remove/{cartItemId}")

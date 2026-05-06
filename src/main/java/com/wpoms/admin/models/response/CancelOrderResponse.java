@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RemoveCartItemResponse {
+public class CancelOrderResponse {
     private String message;
+    private String status;
 }
