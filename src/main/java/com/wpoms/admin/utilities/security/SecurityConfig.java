@@ -1,5 +1,6 @@
 package com.wpoms.admin.utilities.security;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,18 +12,22 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
+
     @Autowired
     private JwtFilter jwtFilter;
+
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -32,11 +37,13 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
 
+
                         // ========== PUBLIC ENDPOINTS ==========
                         .requestMatchers(
                                 "/api/login",
                                 "/api/register")
                         .permitAll()
+
 
                         // ========== SWAGGER UI ENDPOINTS ==========
                         .requestMatchers(
@@ -47,12 +54,14 @@ public class SecurityConfig {
                                 "/webjars/**")
                         .permitAll()
 
+
                         // ========== CUSTOMER ENDPOINTS (Only CUSTOMER role) ==========
                         .requestMatchers(
                                 "/api/customer/register-customer",
                                 "/api/customer/view-customer",
                                 "/api/customer/update-customer")
                         .hasRole("CUSTOMER")
+
 
                         // ========== VENDOR ENDPOINTS (Only VENDOR role) ==========
                         .requestMatchers(
@@ -63,6 +72,28 @@ public class SecurityConfig {
                                 "/api/vendor/staff-list")
                         .hasRole("VENDOR")
 
+
+                        // ========== VENDOR CART ENDPOINTS (Only VENDOR role) ==========
+                        .requestMatchers(
+                                "/api/vendor/cart/add",
+                                "/api/vendor/cart",
+                                "/api/vendor/cart/remove/**")
+                        .hasRole("VENDOR")
+
+
+                        // ========== VENDOR ORDER ENDPOINTS (Only VENDOR role) ==========
+                        .requestMatchers(
+                                "/api/vendor/orders/place",
+                                "/api/vendor/orders",
+                                "/api/vendor/orders/cancel/**")
+                        .hasRole("VENDOR")
+
+
+                        .requestMatchers(
+                                "/api/vendor/orders/{orderId}")
+                        .hasRole("VENDOR")
+
+
                         // ========== MANUFACTURER ENDPOINTS (Only MANUFACTURER role) ==========
                         .requestMatchers(
                                 "/api/admin/register-manufacturer",
@@ -72,6 +103,7 @@ public class SecurityConfig {
                                 "/api/admin/manufacturer/staff-list")
                         .hasRole("MANUFACTURER")
 
+
                         // ========== MANUFACTURER PRODUCT ENDPOINTS (Only MANUFACTURER role) ==========
                         .requestMatchers(
                                 "/api/manufacturer/create-product",
@@ -80,10 +112,23 @@ public class SecurityConfig {
                                 "/api/manufacturer/update-product")
                         .hasRole("MANUFACTURER")
 
+
+                        // ========== MANUFACTURER ORDER ENDPOINTS (Only MANUFACTURER role) ==========
+                        .requestMatchers(
+                                "/api/manufacturer/orders",
+                                "/api/manufacturer/orders/{orderId}",
+                                "/api/manufacturer/orders/{orderId}/accept",
+                                "/api/manufacturer/orders/{orderId}/reject")
+                        .hasRole("MANUFACTURER")
+
+
                         // ========== ALL OTHER REQUESTS ==========
                         .anyRequest().denyAll())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
+
         return http.build();
     }
 }
+
+
