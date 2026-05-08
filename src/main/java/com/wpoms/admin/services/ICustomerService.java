@@ -5,7 +5,7 @@ import com.wpoms.admin.models.payloads.UpdateCustomerPayload;
 import com.wpoms.admin.models.response.RegisterCustomerResponse;
 import com.wpoms.admin.models.response.UpdateCustomerResponse;
 
-public interface ICustomerService {
+public interface ICustomerService{
 
     RegisterCustomerResponse registerCustomer(RegisterCustomerPayload payload);
 

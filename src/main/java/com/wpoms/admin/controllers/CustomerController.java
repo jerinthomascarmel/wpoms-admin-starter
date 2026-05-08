@@ -23,9 +23,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping("/api/customer")
 @CrossOrigin
 public class CustomerController {
-    @Autowired
-    private final ICustomerService customerService;
 
+    ICustomerService customerService;
     public CustomerController(ICustomerService customerService) {
         this.customerService = customerService;
     }
