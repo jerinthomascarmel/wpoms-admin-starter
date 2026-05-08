@@ -19,6 +19,9 @@ public interface IProductService {
     // Update product
     ProductResponse updateProduct(int productId, ProductPayload payload);
 
-      
+    // Delete product (Soft delete by toggling isActive)
+    ProductResponse deleteProduct(int productId, int manufacturerId);
 
+    // Get all vendor products with optional filters (active only)
+    List<ProductResponse> getVendorProducts(String category, String warrantyType, Double price, String productName,String manufacturerName);
 }

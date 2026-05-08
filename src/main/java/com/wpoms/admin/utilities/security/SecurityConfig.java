@@ -64,7 +64,8 @@ public class SecurityConfig {
                                                                 "/api/vendor/get",
                                                                 "/api/vendor/edit",
                                                                 "/api/vendor/create-staff",
-                                                                "/api/vendor/staff-list")
+                                                                "/api/vendor/staff-list",
+                                                                "/api/vendor/all-products")
                                                 .hasRole("VENDOR")
 
                                                 // ========== VENDOR CART ENDPOINTS (Only VENDOR role) ==========
@@ -99,7 +100,8 @@ public class SecurityConfig {
                                                                 "/api/manufacturer/create-product",
                                                                 "/api/manufacturer/products",
                                                                 "/api/manufacturer/product",
-                                                                "/api/manufacturer/update-product")
+                                                                "/api/manufacturer/update-product",
+                                                                "/api/manufacturer/delete-product"  )
                                                 .hasRole("MANUFACTURER")
 
                                                 // ========== MANUFACTURER ORDER ENDPOINTS (Only MANUFACTURER role)

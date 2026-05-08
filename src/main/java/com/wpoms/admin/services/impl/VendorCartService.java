@@ -97,6 +97,8 @@ public class VendorCartService implements IVendorCartService {
             cartItemInfo.setQuantity(newQuantity);
             cartItemInfo.setSubtotal(product.getPrice() * newQuantity);
             cartItemInfo.setProductName(product.getProductName());
+            cartItemInfo.setPrice(product.getPrice());
+            
 
 
             AddToCartResponse response = new AddToCartResponse();
@@ -187,7 +189,7 @@ public class VendorCartService implements IVendorCartService {
         ViewCartResponse response = new ViewCartResponse();
         response.setCartId(cart.getCartId());
         response.setItems(itemDetails);
-        response.setTotalAmount(totalAmount);
+        response.setTotalAmount(Math.round(totalAmount * 100.0) / 100.0);
 
 
         return response;

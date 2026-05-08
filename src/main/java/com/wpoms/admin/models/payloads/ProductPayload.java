@@ -35,6 +35,7 @@ public class ProductPayload {
     @Min (value=0, message="Stock cannot be negative")
     private Integer stockQuantity;
  
-   
+   @NotNull(message = "required")
+   private boolean isActive; 
 
 }

@@ -74,6 +74,14 @@ public class ProductService implements IProductService {
         response.setWarrantyType(savedProduct.getWarrantyType());
         response.setDescription(savedProduct.getDescription());
         response.setManufacturerId(savedProduct.getManufacturerId());
+        response.setStockQuantity(savedProduct.getStockQuantity());
+        response.setIsActive(savedProduct.isActive());
+        ManufacturerMaster manufacturer = manufacturerMasterRepository
+                .findById(savedProduct.getManufacturerId()).orElse(null);
+        if (manufacturer != null) {
+            response.setManufacturerName(manufacturer.getCompanyName());
+        }
+
         response.setMessage("Product created successfully");
 
         return response;
@@ -101,7 +109,14 @@ public class ProductService implements IProductService {
             response.setWarrantyType(product.getWarrantyType());
             response.setDescription(product.getDescription());
             response.setManufacturerId(product.getManufacturerId());
-            return response;
+            response.setStockQuantity(product.getStockQuantity());
+            response.setIsActive(product.isActive());
+            
+            
+
+          
+        return response;
+           
         }).collect(Collectors.toList());
     }
 
@@ -127,6 +142,8 @@ public class ProductService implements IProductService {
         response.setWarrantyType(product.getWarrantyType());
         response.setDescription(product.getDescription());
         response.setManufacturerId(product.getManufacturerId());
+        response.setStockQuantity(product.getStockQuantity());
+        response.setIsActive(product.isActive());
 
         return response;
     }
@@ -149,6 +166,7 @@ public class ProductService implements IProductService {
         product.setPrice(payload.getPrice());
         product.setWarrantyType(payload.getWarrantyType());
         product.setDescription(payload.getDescription());
+        product.setActive(payload.isActive());
 
         // SAVE the updated product
         Product updatedProduct = productRepository.save(product);
@@ -162,9 +180,80 @@ public class ProductService implements IProductService {
         response.setWarrantyType(updatedProduct.getWarrantyType());
         response.setDescription(updatedProduct.getDescription());
         response.setManufacturerId(updatedProduct.getManufacturerId());
+        response.setStockQuantity(updatedProduct.getStockQuantity());
+        response.setIsActive(updatedProduct.isActive());
+
+        ManufacturerMaster manufacturer = manufacturerMasterRepository
+                .findById(updatedProduct.getManufacturerId()).orElse(null);
+        if (manufacturer != null) {
+            response.setManufacturerName(manufacturer.getCompanyName()); //
+        }
         response.setMessage("Product updated successfully");
 
         return response;
+    }
+
+    // ========== 5. DELETE PRODUCT (SOFT DELETE) ==========
+    @Override
+    public ProductResponse deleteProduct(int productId, int manufacturerId) {
+        // Find product by ID and manufacturer ID
+        Product product = productRepository
+                .findByProductIdAndManufacturerId(productId, manufacturerId)
+                .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));
+
+        // Toggle active field
+        product.setActive(!product.isActive());
+
+        // SAVE the updated product
+        Product updatedProduct = productRepository.save(product);
+
+        // Prepare response
+        ProductResponse response = new ProductResponse();
+        response.setProductId(updatedProduct.getProductId());
+        response.setProductName(updatedProduct.getProductName());
+        response.setCategory(updatedProduct.getCategory());
+        response.setPrice(updatedProduct.getPrice());
+        response.setWarrantyType(updatedProduct.getWarrantyType());
+        response.setDescription(updatedProduct.getDescription());
+        response.setManufacturerId(updatedProduct.getManufacturerId());
+        response.setIsActive(updatedProduct.isActive());
+        response.setMessage(
+                updatedProduct.isActive() ? "Product activated successfully" : "Product soft deleted successfully");
+
+        return response;
+    }
+
+    // ========== 6. GET VENDOR PRODUCTS (ACTIVE ONLY, WITH FILTERS) ==========
+    @Override
+    public List<ProductResponse> getVendorProducts(String category, String warrantyType, Double price,
+            String productName, String manufacturerName) {
+        // Get active products matching filters
+        List<Product> products = productRepository.findVendorProducts(category, warrantyType, price, productName,
+                manufacturerName);
+
+        // Convert to response list
+        return products.stream().map(product -> {
+            ProductResponse response = new ProductResponse();
+            response.setProductId(product.getProductId());
+            response.setProductName(product.getProductName());
+            response.setCategory(product.getCategory());
+            response.setPrice(product.getPrice());
+            response.setWarrantyType(product.getWarrantyType());
+            response.setDescription(product.getDescription());
+            response.setManufacturerId(product.getManufacturerId());
+
+            // Optionally fetch manufacturer name if needed, but keeping it consistent with
+            // other methods
+            ManufacturerMaster manufacturer = manufacturerMasterRepository.findById(product.getManufacturerId())
+                    .orElse(null);
+            if (manufacturer != null) {
+                response.setManufacturerName(manufacturer.getCompanyName());
+            }
+            response.setStockQuantity(product.getStockQuantity());
+            response.setIsActive(product.isActive());
+
+            return response;
+        }).collect(Collectors.toList());
     }
 
     private void validateCategoryAndWarrantyType(ProductPayload payload) {
