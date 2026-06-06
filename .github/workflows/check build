@@ -1,0 +1,17 @@
+name: Docker Build Debug
+
+on:
+workflow_dispatch:
+
+jobs:
+  docker-build:
+  runs-on: ubuntu-latest
+
+
+  steps:
+    - uses: actions/checkout@v4
+  
+    - name: Build Backend Image
+      run: |
+        docker build --no-cache --progress=plain -t backend ./backend
+
