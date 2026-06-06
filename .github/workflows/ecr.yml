@@ -12,4 +12,4 @@ jobs:
 
       - name: Build Backend Image
         run: |
-          docker build --no-cache --progress=plain -t backend ./backend
+          docker build --no-cache --progress=plain -t backend .
